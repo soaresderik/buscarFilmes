@@ -47,7 +47,6 @@ body {
   border-bottom: 1px solid #e5e5e5;
 }
 
-
 /* Supporting marketing content */
 .marketing {
   margin: 40px 0;
@@ -76,9 +75,12 @@ body {
 }
 
 .thumbnail {
-  height: 370px;
+  height: 360px;
+  text-align: center;
 }
 
-.thumbnail img  {
-  height: 250px;
+.thumbnail img{
+  height: 230px;
 }
+
+
