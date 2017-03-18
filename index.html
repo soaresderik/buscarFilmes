@@ -1,40 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Encontrar Filmes</title>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<title>Buscar Filmes</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	
 </head>
 <body>
 <div class="container">
 	<div class="header clearfix">
-        <h3 class="text-muted">Encontrar Filmes</h3>
-      </div>
+		<h3>Buscar Filmes</h3>
+	</div>
 
 	<div class="jumbotron">
-  		<div class="col-lg-12">
-    		<form class="input-group" id="formulario">
-		      <input type="text" class="form-control" placeholder="Digite o nome do filme..." id="pesquisar">
-		      <span class="input-group-btn">
-		       	<button class="btn btn-default" type="submit">Go!</button>
-		      </span>
-    		</form><!-- /input-group -->
-  		</div><!-- /.col-lg-6 -->
-  	</div>
-</div>
+		<div class="col-lg-12">
+			<form class="input-group" id="formulario">
+				<input type="text" name="" class="form-control" placeholder="Digite o nome do filme..." id="pesquisar">
+				<span class="input-group-btn ">
+					<button class="btn btn-primary" type="submit">Pesquisar</button>
+				</span>
+			</form>
+		</div>
+	</div>
+</div> <!-- container 1 -->
 
 <div class="container">
-	<div id="filmes" class="row"></div>
+	<div class="row" id="filmes"></div>
 </div>
 
-<script
-  src="https://code.jquery.com/jquery-3.2.0.min.js"
-  integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I="
-  crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.2.0.min.js" integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I=" crossorigin="anonymous"></script>
+<script src="js/bootstrap.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
