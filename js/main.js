@@ -2,28 +2,28 @@ document.getElementById('formulario').addEventListener('submit', pesquisarFilme)
 
 function pesquisarFilme(e){
 	var filmePesquisa = document.getElementById('pesquisar').value;
-	getFilmes(filmePesquisa);
-
+	buscaFilmes(filmePesquisa);
 	e.preventDefault();
 }
 
-function getFilmes(filmePesquisa){
-axios.get('http://www.omdbapi.com?s=' + filmePesquisa)
+function buscaFilmes(filmePesquisa){
+	axios.get('http://www.omdbapi.com/?s=' + filmePesquisa)
   .then(function (response) {
     console.log(response);
     var filmes = response.data.Search;
     var mostrarFilmes = '';
 
     for(var i = 0; i < filmes.length; i++){
-    	mostrarFilmes += '<div class="col-sm-6 col-md-4">' +
-    					 		'<div class="thumbnail ">' +
-    					 	      ' <img src="'+ filmes[i].Poster +'" class="img-thumbnail clearfix">' +
-    					 	      	'<div class="caption">'+
-    					 	      	'<h5>' + filmes[i].Title +'</h5>' +
-    					 	      	'<p><a href="#" class="btn btn-primary clearfix" role="button" onclick="filmeDetalhes(\'' + filmes[i].imdbID +'\')">Mais Detalhes</a></p>' +
-    					 	      	'</div>' +
-    							'</div>' +
-    					 '</div>';
+    	mostrarFilmes += `
+			  <div class="col-sm-6 col-md-4">
+			    <div class="thumbnail">
+			      <img src="${filmes[i].Poster}" class="img-thumbnail">
+			        <h4>${filmes[i].Title}</h4>
+			        <p><a href="#" class="btn btn-primary" role="button" onclick="filmeDetalhes('${filmes[i].imdbID}')">Ver Detalhes</a></p>
+			      </div>
+			    </div>
+			  </div>
+    	`;
     }
 
     document.getElementById('filmes').innerHTML = mostrarFilmes;
@@ -33,52 +33,48 @@ axios.get('http://www.omdbapi.com?s=' + filmePesquisa)
   });
 }
 
-
 function filmeDetalhes(id){
 	sessionStorage.setItem('filmeID', id);
-	window.location = 'filme.html';
+	window.location = 'detalhes.html';
 	return false;
 }
 
 function mostraFilme(){
 	var filmeID = sessionStorage.getItem('filmeID');
 
-axios.get('http://www.omdbapi.com?i=' + filmeID)
+	axios.get('http://www.omdbapi.com/?i=' + filmeID)
   .then(function (response) {
-    console.log(response);
-    var filme = response.data;
+  	var filme = response.data;
     console.log(filme);
-    var mostrarFilmes = `
+    var mostraFilme = `
+                          <div class="col-md-6">
+                            <img src="${filme.Poster}" class="img-responsive">
+                              <h3><strong>${filme.Title}</strong></h3>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="well clearfix">
+                              <ul class="list-group">
+                                <li class="list-group-item"><strong>Gênero:</strong>${filme.Genre}</li>
+                                <li class="list-group-item"><strong>Lancamento:</strong>${filme.Released}</li>
+                                <li class="list-group-item"><strong>Duração:</strong>${filme.Runtime}</li>
+                                <li class="list-group-item"><strong>Idiomas:</strong>${filme.Language}</li>
+                                <li class="list-group-item"><strong>Prêmios:</strong>${filme.Awards}</li>
+                                <li class="list-group-item"><strong>Atores:</strong>${filme.Actors}</li>
+                              </ul>
 
-			<div class="row">
-				<div class="col-md-6">
-				<img src="${filme.Poster}" class="img-responsive" >
-					<h3><strong>${filme.Title}</strong></h3>
-				</div>
-				<div class="col-md-6">
-					<div class="well">
-						<ul class="list-group">
-							<li class="list-group-item"><strong>Gênero:</strong>${filme.Genre}</li>
-							<li class="list-group-item"><strong>Lançamento:</strong>${filme.Released}</li>
-							<li class="list-group-item"><strong>Avaliado por:</strong>${filme.Rated}</li>
-							<li class="list-group-item"><strong>IMDB avaliação:</strong>${filme.imdbRating}</li>
-							<li class="list-group-item"><strong>Diretor:</strong>${filme.Director}</li>
-							<li class="list-group-item"><strong>Escritor:</strong>${filme.Writer}</li>
-							<li class="list-group-item"><strong>Atores:</strong>${filme.Actors}</li>
-						</ul>
-							<h3>Descrição</h3>
-							${filme.Plot}
-							<hr>
-							<a href="http://imdb.com/title/${filme.imdbID}" target="_blank" class="btn btn-success">Ver no iMDB</a><br>
-							<a href="index.html" class="btn btn-default">Voltar a Pesquisar</a>
-					</div>
-				</div>
-			</div>
-		`;
+                              <h3>Descrição</h3>
+                              ${filme.Plot}
+                              <hr>
+                              <a href="http://imdb.com/title/${filme.imdbID}" target="_blank" class="btn btn-success pull-left">Ver no iMDB</a>
+                              <a href="index.html" class="btn btn-default pull-right">Voltar a Pesquisar</a>
+                            </div>
+                          </div>
+    `;
 
-    document.getElementById('filmes').innerHTML = mostrarFilmes;
+    document.getElementById('filmes').innerHTML = mostraFilme;
   })
   .catch(function (error) {
     console.log(error);
   });
+
 }
